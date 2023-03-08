@@ -14,14 +14,14 @@ class CustomerController extends Controller
      * get all info of specific user by his id
      * @param  int $CustomerId
      */
-    public function Customer_info(int $CustomerId){
-        $info = User::where('id' , $CustomerId)->get();
+    public function Customer_info(int $CustomerId)
+    {
+        $info = User::where('id', $CustomerId)->get();
         //check if $info has a value 
-        if(json_decode($info , true)){
-            return $this->success($info,'Customer information');
-        }
-        else{
-            return $this->success('','Customer not found !');
+        if (json_decode($info, true)) {
+            return $this->success($info, 'Customer information');
+        } else {
+            return $this->success('', 'Customer not found !');
         }
     }
 
@@ -29,9 +29,10 @@ class CustomerController extends Controller
     /**
      * get info of all user by 
      */
-    public function Customers_info(){
+    public function Customers_info()
+    {
         $info = User::all();
-            return $this->success($info,'Customer information');
+        return $this->success($info, 'Customer information');
     }
 
 
@@ -41,29 +42,32 @@ class CustomerController extends Controller
      * @param  int $CustomerId
      * @param  Request $request 
      */
-    public function edit_customer(Request $request, int $CustomerId){
-        $validator = Validator::make($request->all(), [ 
-            'name' => 'string|min:5',
-            'email' => 'email',
-        ]
+    public function edit_customer(Request $request, int $CustomerId)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'string|min:5',
+                'email' => 'email',
+            ]
         );
         /**
          * return the error and info about it if something wrong with user input  
-        */ 
+         */
         if ($validator->fails()) {
             return $validator->errors();
         }
         $Customer = User::find($CustomerId);
-        if($Customer){
-            if($Customer->email != $request->email){
+        if ($Customer) {
+            if ($Customer->email != $request->email) {
                 $Customer->update([
-                    'email' =>$request->email,
+                    'email' => $request->email,
                 ]);
             }
             $Customer->update([
-                'name' =>$request->name,
+                'name' => $request->name,
             ]);
-            return $this->success('','done');
+            return $this->success('', 'done');
         }
     }
 }
