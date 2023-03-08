@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -23,7 +23,7 @@ class AuthController extends Controller
         // validation on user input
         $validator = Validator::make($request->all(), [ 
             'name' => 'required|string|min:5',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:customers',
             'password' => 'required|string|confirmed|min:8',
         ]
         );
@@ -37,7 +37,7 @@ class AuthController extends Controller
         /**
          * store user info in DB
          */
-        $user = User::create([
+        $user = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -64,7 +64,7 @@ class AuthController extends Controller
         // Check if the username and password match in Database 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Success
-            $userInfo = User::where('email',$request->email)->get();
+            $userInfo = Customer::where('email',$request->email)->get();
             return $this->success($userInfo,'Logged in Successfully');
         } else {
             // fail
