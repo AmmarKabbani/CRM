@@ -21,4 +21,5 @@ Route::group(['middleware' => 'api'], function ($routes) {
     Route::post('/login',[AuthController::class , "login"]);
     Route::get('/customerInfo/customerId={id}',[CustomerController::class , "Customer_info"]);
     Route::get('/customersInfo',[CustomerController::class , "Customers_info"]);
+    Route::post('/editCustomer/customerId={id}',[CustomerController::class , "edit_customer"]);
 });
