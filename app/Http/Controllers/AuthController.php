@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +37,7 @@ class AuthController extends Controller
         /**
          * store user info in DB
          */
-        $user = Customer::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -64,7 +64,7 @@ class AuthController extends Controller
         // Check if the username and password match in Database 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Success
-            $userInfo = Customer::where('email',$request->email)->get();
+            $userInfo = User::where('email',$request->email)->get();
             return $this->success($userInfo,'Logged in Successfully');
         } else {
             // fail
