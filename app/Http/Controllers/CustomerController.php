@@ -25,7 +25,6 @@ class CustomerController extends Controller
         }
     }
 
-
     /**
      * get info of all user by 
      */
@@ -34,7 +33,6 @@ class CustomerController extends Controller
         $info = User::all();
         return $this->success($info, 'Customer information');
     }
-
 
     /**
      * edit  info of specific user by his id 
@@ -84,5 +82,4 @@ class CustomerController extends Controller
             return $this->error('Customer Not Found',204);
         }
     }
-
 }
