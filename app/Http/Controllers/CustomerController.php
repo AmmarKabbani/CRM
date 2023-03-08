@@ -70,4 +70,19 @@ class CustomerController extends Controller
             return $this->success('', 'done');
         }
     }
+
+    /**
+     * Delete one user By his ID
+     * @param  Request $request 
+     */
+    public function delete_customer(Request $request){
+        $customer = User::find($request->customerId);
+        if($customer){
+            $customer->delete();
+            return $this->success('','Deleted successfully');
+        }else{
+            return $this->error('Customer Not Found',204);
+        }
+    }
+
 }
